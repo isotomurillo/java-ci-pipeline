@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_calculadora_a1" default="compile.module.calculadora_a1">
+  <dirname property="module.calculadora_a1.basedir" file="${ant.file.module_calculadora_a1}"/>
+  
+  <property name="module.jdk.home.calculadora_a1" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.calculadora_a1" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.calculadora_a1" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.calculadora_a1" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="calculadora_a1.output.dir" value="${module.calculadora_a1.basedir}/out/production/Calculadora A1"/>
+  <property name="calculadora_a1.testoutput.dir" value="${module.calculadora_a1.basedir}/out/test/Calculadora A1"/>
+  
+  <path id="calculadora_a1.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="calculadora_a1.module.production.classpath">
+    <path refid="${module.jdk.classpath.calculadora_a1}"/>
+  </path>
+  
+  <path id="calculadora_a1.runtime.production.module.classpath">
+    <pathelement location="${calculadora_a1.output.dir}"/>
+  </path>
+  
+  <path id="calculadora_a1.module.classpath">
+    <path refid="${module.jdk.classpath.calculadora_a1}"/>
+    <pathelement location="${calculadora_a1.output.dir}"/>
+  </path>
+  
+  <path id="calculadora_a1.runtime.module.classpath">
+    <pathelement location="${calculadora_a1.testoutput.dir}"/>
+    <pathelement location="${calculadora_a1.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.calculadora_a1">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.calculadora_a1">
+    <patternset refid="excluded.from.module.calculadora_a1"/>
+  </patternset>
+  
+  <path id="calculadora_a1.module.sourcepath">
+    <dirset dir="${module.calculadora_a1.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.calculadora_a1" depends="compile.module.calculadora_a1.production,compile.module.calculadora_a1.tests" description="Compile module Calculadora A1"/>
+  
+  <target name="compile.module.calculadora_a1.production" depends="register.custom.compilers" description="Compile module Calculadora A1; production classes">
+    <mkdir dir="${calculadora_a1.output.dir}"/>
+    <javac2 destdir="${calculadora_a1.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.calculadora_a1}/javac">
+      <compilerarg line="${compiler.args.calculadora_a1}"/>
+      <bootclasspath refid="calculadora_a1.module.bootclasspath"/>
+      <classpath refid="calculadora_a1.module.production.classpath"/>
+      <src refid="calculadora_a1.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.calculadora_a1"/>
+    </javac2>
+    
+    <copy todir="${calculadora_a1.output.dir}">
+      <fileset dir="${module.calculadora_a1.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.calculadora_a1.tests" depends="register.custom.compilers,compile.module.calculadora_a1.production" description="compile module Calculadora A1; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.calculadora_a1" description="cleanup module">
+    <delete dir="${calculadora_a1.output.dir}"/>
+    <delete dir="${calculadora_a1.testoutput.dir}"/>
+  </target>
+</project>
